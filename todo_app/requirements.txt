@@ -1,0 +1,6 @@
+# Flask To-Do API - Шаардлагатай сангууд
+# Суулгах: pip install -r requirements.txt
+Flask>=3.0.0
+# pytest болон pytest-cov суулгах бол:
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
