@@ -13,7 +13,6 @@ import unittest, sys, os, time, json, traceback
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from tests.test_api import TestAuth, TestTasks, TestIsolation
 
-# ── Windows ANSI color enable ─────────────────────────────────────────────────
 def _enable_win_ansi():
     try:
         import ctypes
@@ -35,11 +34,11 @@ W = 72
 
 def sep(ch='═'): return ch * W
 
-# ── Custom result collector ────────────────────────────────────────────────────
+
 class _Result(unittest.TestResult):
     def __init__(self):
         super().__init__()
-        self.records  = []   # (status, test, elapsed_ms, exc_info)
+        self.records  = []   
         self._started = {}
 
     def startTest(self, test):
@@ -92,7 +91,7 @@ def run():
     suite.run(result)
     elapsed = time.perf_counter() - t0
 
-    # ── Print results grouped by section ─────────────────────────────────────
+
     idx       = 0
     class_map = {cls.__name__: title for cls, title in SECTIONS}
     cur_cls   = None
@@ -115,7 +114,6 @@ def run():
 
         tc_id = f'TC-{idx:03d}'
         desc  = (test.shortDescription() or str(test))
-        # strip "TC-NNN: " prefix already in description
         if ': ' in desc:
             desc = desc.split(': ', 1)[1]
 
@@ -127,7 +125,7 @@ def run():
                 for ln in line.strip().splitlines():
                     print(f'           {R}{ln}{RS}')
 
-    # ── Summary ───────────────────────────────────────────────────────────────
+
     total   = len(result.records)
     passed  = sum(1 for s, *_ in result.records if s == 'PASS')
     failed  = sum(1 for s, *_ in result.records if s == 'FAIL')
@@ -152,7 +150,6 @@ def run():
     for label, value, icon in rows:
         print(f'  {label:<18}  {icon}  {value}')
 
-    # ── Bug list ──────────────────────────────────────────────────────────────
     if failed or errors:
         print()
         print(R + B + '  ИЛЭРСЭН АЛДААНУУД (Bug Report):' + RS)
@@ -166,7 +163,7 @@ def run():
                 print(f'  {R}BUG-{bnum:03d}{RS}  {desc}')
                 bnum += 1
 
-    # ── Final verdict ─────────────────────────────────────────────────────────
+
     print()
     if failed == 0 and errors == 0:
         print(G + B + '  ✅  БҮХ ТЕСТ ТЭНЦЛЭЭ — Систем ТОГТВОРТОЙ!' + RS)
@@ -174,7 +171,7 @@ def run():
         print(R + B + f'  ❌  {failed + errors} ТЕСТ УНАВ — Засварын шаардлагатай!' + RS)
 
     print(B + sep() + RS)
-    print(f'  GitHub: github.com/III-VI-IX/software-quality-testing')
+    print(f'  GitHub: https://github.com/Tuguldur666/biy-daalt')
     print(B + sep() + RS)
     print()
 
